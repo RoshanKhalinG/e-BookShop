@@ -2,25 +2,11 @@ import React, { useContext } from "react";
 import "./navbar.styles.css";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../App";
-import { ReactComponent as Cart } from "../../../assets/cart.svg";
-import { getAuth, signOut } from "firebase/auth";
-import app from "../../../firebase/Firebase";
 import logo from "../../../assets/books-images/ebookshop logo (1).png"
 
 const Navbar = ({ darkTheme, darkText }) => {
   const user = useContext(UserContext);
-  const auth = getAuth(app);
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   const showLoginandSignUp = (
     <nav className="nav-links-container">
@@ -49,29 +35,6 @@ const Navbar = ({ darkTheme, darkText }) => {
     </nav>
   );
 
-  const showLogoutAndCart = (
-    <nav className="nav-links-container">
-      <Link to="/" className={`${darkText ? "nav-links-dark" : "nav-links"}`}>
-        Home
-      </Link>
-       
-      <Link
-        to="/books"
-        className={`${darkText ? "nav-links-dark" : "nav-links"}`}
-      >
-        Books
-      </Link>
-      <a
-        onClick={handleLogout}
-        className={`${darkText ? "nav-links-dark" : "nav-links"}`}
-      >
-        Logout
-      </a>
-      <Link to="/cart" className="cart-link">
-        <Cart />
-      </Link>
-    </nav>
-  );
 
   return (
     <section
@@ -84,7 +47,7 @@ const Navbar = ({ darkTheme, darkText }) => {
         <img src={logo} alt="My Image" style={{ width: '120px', height: 'auto' }} />
         </Link>
 
-        {user ? showLogoutAndCart : showLoginandSignUp}
+        {user ? showLoginandSignUp : showLoginandSignUp}
       </div>
     </section>
   );
